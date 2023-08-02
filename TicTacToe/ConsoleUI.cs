@@ -15,7 +15,7 @@ namespace TicTacToe
         public ConsoleUI(IConsoleManager consoleManager, IGame game)
         {
             _consoleManager = consoleManager;
-            _game = game;   
+            _game = game;
         }
 
         public void DisplayBoard()
@@ -30,6 +30,10 @@ namespace TicTacToe
                 }
                 _consoleManager.WriteLine();
             }
+        }
+        public void Run(string[] args)
+        {
+            DisplayBoard();
         }
     }
 }

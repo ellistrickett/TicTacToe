@@ -9,5 +9,6 @@ namespace TicTacToe
     public interface IConsoleUI
     {
         void DisplayBoard();
+        void Run(string[] args);
     }
 }
