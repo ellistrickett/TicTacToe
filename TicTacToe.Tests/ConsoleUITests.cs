@@ -33,13 +33,13 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void GetPlayerMove_ShouldPromptPlayerAndReturnValidMove()
+        public void ConsoleUI_GetPlayerMove_ShouldPromptPlayerAndReturnMove()
         {
             // Arrange
             string expectedPrompt = "Enter your move (1-9): ";
-            string validInput = "5";
+            string input = "5";
             _fixture.MockConsoleManager.Setup(m => m.ReadLine())
-                                      .Returns(validInput);
+                                      .Returns(input);
 
             // Act
             int move = _fixture.ConsoleUI.GetPlayerMove();

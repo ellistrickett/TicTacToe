@@ -31,6 +31,13 @@ namespace TicTacToe
                 _consoleManager.WriteLine();
             }
         }
+        public int GetPlayerMove()
+        {
+            _consoleManager.Write("Enter your move (1-9): ");
+            string input = _consoleManager.ReadLine();
+            return int.Parse(input);
+        }
+
         public void Run(string[] args)
         {
             DisplayBoard();
