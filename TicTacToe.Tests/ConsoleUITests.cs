@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using ConsoleManager;
+using Moq;
 using System;
 
 namespace TicTacToe.Tests
@@ -15,7 +16,10 @@ namespace TicTacToe.Tests
                 { '-', '-', '-' },
                 { '-', '-', '-' },
                 { '-', '-', '-' }
-            };
+            });
+
+            var consoleManagerMock = new Mock<IConsoleManager>();
+            var consoleUI = new ConsoleUI(gameMock.Object, consoleManagerMock.Object);
 
             var consoleUI = new ConsoleUI(gameMock.Object);
 
@@ -23,7 +27,8 @@ namespace TicTacToe.Tests
             consoleUI.DisplayBoard();
 
             // Assert
-
+            consoleManagerMock.Verify(m => m.Write(It.IsAny<string>()), Times.Exactly(9));
+            consoleManagerMock.Verify(m => m.WriteLine(It.IsAny<string>()), Times.Exactly(3));
         }
     }
 }
