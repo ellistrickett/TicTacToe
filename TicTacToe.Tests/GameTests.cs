@@ -65,5 +65,15 @@ namespace TicTacToe.Tests
             Assert.Equal('X', _game.Board[0, 0]);
         }
 
+        [Fact]
+        public void Game_IsGameOver_ShouldReturnFalse()
+        {
+            // Act
+            bool isGameOver = _game.IsGameOver();
+
+            // Assert
+            Assert.False(isGameOver);
+        }
+
     }
 }

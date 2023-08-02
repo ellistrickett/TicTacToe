@@ -40,6 +40,11 @@
             board[row, col] = playerSymbol;
         }
 
+        public bool IsGameOver()
+        {
+            return false;
+        }
+
         private void GetRowAndColumn(int move, out int row, out int col)
         {
             row = (move - 1) / 3;
