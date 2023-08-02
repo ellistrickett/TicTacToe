@@ -42,13 +42,17 @@ namespace TicTacToe
             {
                 string input = _consoleManager.ReadLine();
 
-                if (!int.TryParse(input, out move))
+                if (!int.TryParse(input, out move) || move < 1 || move > 9)
                 {
                     _consoleManager.Write("Invalid input! Please enter a number (1-9): ");
                 }
                 else
                 {
-                    isValidMove = true;
+                    isValidMove = _game.IsValidMove(move);
+                    if (!isValidMove)
+                    {
+                        _consoleManager.Write("Invalid move! Cell already occupied. Please enter another move: ");
+                    }
                 }
 
             } while (!isValidMove);

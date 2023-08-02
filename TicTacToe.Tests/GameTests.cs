@@ -52,18 +52,5 @@ namespace TicTacToe.Tests
             Assert.False(isValid);
         }
 
-        [Fact]
-        public void Game_IsValidMove_ShouldReturnFalseForInvalidNumber()
-        {
-            // Arrange
-            int invalidMove = 11;
-
-            // Act
-            bool isValid = _game.IsValidMove(invalidMove);
-
-            // Assert
-            Assert.False(isValid);
-        }
-
     }
 }

@@ -18,6 +18,10 @@ namespace TicTacToe.Tests
         {
             MockConsoleManager = new Mock<IConsoleManager>();
             MockGame = new Mock<IGame>();
+
+            MockGame.Setup(m => m.IsValidMove(It.IsAny<int>()))
+                       .Returns(true);
+
             ConsoleUI = new ConsoleUI(MockConsoleManager.Object, MockGame.Object);
         }
 

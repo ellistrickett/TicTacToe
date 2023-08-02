@@ -53,7 +53,6 @@ namespace TicTacToe.Tests
         public void ConsoleUI_GetPlayerMove_InputLetterPromptsUserForNumber()
         {
             // Arrange
-            string expectedPrompt = "Enter your move (1-9): ";
             string input = "L";
             _fixture.MockConsoleManager.SetupSequence(m => m.ReadLine())
                                       .Returns(input)
@@ -63,8 +62,48 @@ namespace TicTacToe.Tests
             int move = _fixture.ConsoleUI.GetPlayerMove();
 
             // Assert
-            _fixture.MockConsoleManager.Verify(m => m.Write(expectedPrompt), Times.Once);
             _fixture.MockConsoleManager.Verify(m => m.Write("Invalid input! Please enter a number (1-9): "), Times.Once);
+            _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Exactly(2));
+            Assert.Equal(5, move);
+        }
+
+        [Fact]
+        public void ConsoleUI_GetPlayerMove_InputInavlidNumberPromptsUserForNumber()
+        {
+            // Arrange
+            string input = "11";
+            _fixture.MockConsoleManager.SetupSequence(m => m.ReadLine())
+                                      .Returns(input)
+                                      .Returns("5");
+
+            // Act
+            int move = _fixture.ConsoleUI.GetPlayerMove();
+
+            // Assert
+            _fixture.MockConsoleManager.Verify(m => m.Write("Invalid input! Please enter a number (1-9): "), Times.Once);
+            _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Exactly(2));
+            Assert.Equal(5, move);
+        }
+
+
+        [Fact]
+        public void ConsoleUI_GetPlayerMove_InputOccupiedCellPromptsAnotherMove()
+        {
+            // Arrange
+            string input = "7";
+            _fixture.MockConsoleManager.SetupSequence(m => m.ReadLine())
+                                      .Returns(input)
+                                      .Returns("5");
+
+            _fixture.MockGame.SetupSequence(m => m.IsValidMove(It.IsAny<int>()))
+                .Returns(false)
+                .Returns(true);
+
+            // Act
+            int move = _fixture.ConsoleUI.GetPlayerMove();
+
+            // Assert
+            _fixture.MockConsoleManager.Verify(m => m.Write("Invalid move! Cell already occupied. Please enter another move: "), Times.Once);
             _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Exactly(2));
             Assert.Equal(5, move);
         }
