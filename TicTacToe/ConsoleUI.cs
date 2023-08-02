@@ -33,9 +33,28 @@ namespace TicTacToe
         }
         public int GetPlayerMove()
         {
+            int move;
+            bool isValidMove = false;
+
             _consoleManager.Write("Enter your move (1-9): ");
-            string input = _consoleManager.ReadLine();
-            return int.Parse(input);
+            
+            do
+            {
+                string input = _consoleManager.ReadLine();
+
+                if (!int.TryParse(input, out move))
+                {
+                    _consoleManager.WriteLine("Invalid input! Please enter a number (1-9).");
+                }
+                else
+                {
+                    isValidMove = true;
+                }
+
+            } while (!isValidMove);
+
+            return move;
+
         }
 
         public void Run(string[] args)
