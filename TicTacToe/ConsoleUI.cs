@@ -63,9 +63,12 @@ namespace TicTacToe
 
         public void Run(string[] args)
         {
-            DisplayBoard();
-            int move = GetPlayerMove();
-            _game.MakeMove(move, 'X');
+            while (!_game.IsGameOver())
+            {
+                DisplayBoard();
+                int move = GetPlayerMove();
+                _game.MakeMove(move, 'X');
+            }
         }
     }
 }
