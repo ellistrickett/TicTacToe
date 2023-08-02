@@ -13,9 +13,9 @@ namespace TicTacToe.Tests
             // Assert
             char[,] expectedBoard = new char[,]
             {
-            { '-', '-', '-' },
-            { '-', '-', '-' },
-            { '-', '-', '-' }
+                { '-', '-', '-' },
+                { '-', '-', '-' },
+                { '-', '-', '-' }
             };
 
             Assert.Equal(expectedBoard, game.GetBoard());
