@@ -4,29 +4,32 @@ using System;
 
 namespace TicTacToe.Tests
 {
-    public class ConsoleUITests
+    public class ConsoleUITests : IClassFixture<ConsoleUIFixture>
     {
+        private readonly ConsoleUIFixture _fixture;
+
+        public ConsoleUITests(ConsoleUIFixture fixture)
+        {
+            _fixture = fixture;
+        }
+
         [Fact]
         public void ConsoleUI_DisplayBoard_ShouldDisplayCorrectBoard()
         {
             // Arrange
-            var gameMock = new Mock<IGame>();
-            gameMock.Setup(g => g.GetBoard()).Returns(new char[,]
+            _fixture.MockGame.Setup(g => g.GetBoard()).Returns(new char[,]
             {
                 { '-', '-', '-' },
                 { '-', '-', '-' },
                 { '-', '-', '-' }
             });
 
-            var consoleManagerMock = new Mock<IConsoleManager>();
-            var consoleUI = new ConsoleUI(consoleManagerMock.Object, gameMock.Object);
-
             // Act
-            consoleUI.DisplayBoard();
+            _fixture.ConsoleUI.DisplayBoard();
 
             // Assert
-            consoleManagerMock.Verify(m => m.Write(It.IsAny<string>()), Times.Exactly(9));
-            consoleManagerMock.Verify(m => m.WriteLine(), Times.Exactly(3));
+            _fixture.MockConsoleManager.Verify(m => m.Write(It.IsAny<string>()), Times.Exactly(9));
+            _fixture.MockConsoleManager.Verify(m => m.WriteLine(), Times.Exactly(3));
         }
     }
 }
