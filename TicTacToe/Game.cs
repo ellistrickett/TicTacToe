@@ -14,6 +14,8 @@
             };
         }
 
+        public char[,] Board => board;
+
         public char[,] GetBoard()
         {
             return board;
