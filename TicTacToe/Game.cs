@@ -18,5 +18,10 @@
         {
             return board;
         }
+
+        public bool IsValidMove(int move)
+        {
+            return true;
+        }
     }
 }
