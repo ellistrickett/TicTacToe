@@ -20,5 +20,19 @@ namespace TicTacToe.Tests
 
             Assert.Equal(expectedBoard, game.GetBoard());
         }
+
+        [Fact]
+        public void Game_IsValidMove_ShouldReturnTrueForValidMove()
+        {
+            // Arrange
+            Game game = new Game();
+            int validMove = 3;
+
+            // Act
+            bool isValid = game.IsValidMove(validMove);
+
+            // Assert
+            Assert.True(isValid);
+        }
     }
 }
