@@ -31,5 +31,23 @@ namespace TicTacToe.Tests
             _fixture.MockConsoleManager.Verify(m => m.Write(It.IsAny<string>()), Times.Exactly(9));
             _fixture.MockConsoleManager.Verify(m => m.WriteLine(), Times.Exactly(3));
         }
+
+        [Fact]
+        public void GetPlayerMove_ShouldPromptPlayerAndReturnValidMove()
+        {
+            // Arrange
+            string expectedPrompt = "Enter your move (1-9): ";
+            string validInput = "5";
+            _fixture.MockConsoleManager.Setup(m => m.ReadLine())
+                                      .Returns(validInput);
+
+            // Act
+            int move = _fixture.ConsoleUI.GetPlayerMove();
+
+            // Assert
+            _fixture.MockConsoleManager.Verify(m => m.Write(expectedPrompt), Times.Once);
+            _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Once);
+            Assert.Equal(5, move);
+        }
     }
 }
