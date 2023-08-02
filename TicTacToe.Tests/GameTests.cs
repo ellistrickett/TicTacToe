@@ -59,7 +59,7 @@ namespace TicTacToe.Tests
             int validMove = 1;
 
             // Act
-            bool isValid = _game.MakeMove(validMove, 'X');
+            _game.MakeMove(validMove, 'X');
 
             // Assert
             Assert.Equal('X', _game.Board[0, 0]);

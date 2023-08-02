@@ -23,8 +23,7 @@
 
         public bool IsValidMove(int move)
         {
-            int row = (move - 1) / 3;
-            int col = (move - 1) % 3;
+            GetRowAndColumn(move, out int row, out int col);
 
             if (board[row, col] != '-')
             {
@@ -32,6 +31,19 @@
             }
 
             return true;
+        }
+
+        public void MakeMove(int move, char playerSymbol)
+        {
+            GetRowAndColumn(move, out int row, out int col);
+
+            board[row, col] = playerSymbol;
+        }
+
+        private void GetRowAndColumn(int move, out int row, out int col)
+        {
+            row = (move - 1) / 3;
+            col = (move - 1) % 3;
         }
     }
 }
