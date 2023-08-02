@@ -41,15 +41,28 @@ namespace TicTacToe.Tests
         public void Game_IsValidMove_ShouldReturnFalseForOccupiedCell()
         {
             // Arrange
-            int validMove = 2;
+            int move = 2;
 
             _game.Board[0, 1] = 'X';
 
             // Act
-            bool isValid = _game.IsValidMove(validMove);
+            bool isValid = _game.IsValidMove(move);
 
             // Assert
             Assert.False(isValid);
+        }
+
+        [Fact]
+        public void Game_MakeMove_ShouldUpdateTheBoard()
+        {
+            // Arrange
+            int validMove = 1;
+
+            // Act
+            bool isValid = _game.MakeMove(validMove, 'X');
+
+            // Assert
+            Assert.Equal('X', _game.Board[0, 0]);
         }
 
     }
