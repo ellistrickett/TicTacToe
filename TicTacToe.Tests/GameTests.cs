@@ -38,12 +38,11 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void Game_IsValidMove_ShouldReturnFalseForRepeatedMove()
+        public void Game_IsValidMove_ShouldReturnFalseForOccupiedCell()
         {
             // Arrange
             int validMove = 2;
 
-            // Set the board to simulate a move by player 'X' at (0,1)
             _game.Board[0, 1] = 'X';
 
             // Act
