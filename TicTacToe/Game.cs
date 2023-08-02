@@ -23,6 +23,11 @@
 
         public bool IsValidMove(int move)
         {
+            if (move < 1 || move > 9)
+            {
+                return false;
+            }
+
             int row = (move - 1) / 3;
             int col = (move - 1) % 3;
 
