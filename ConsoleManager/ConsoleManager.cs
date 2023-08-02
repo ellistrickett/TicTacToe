@@ -10,5 +10,9 @@
         {
             Console.WriteLine(value);
         }
+        public void WriteLine()
+        {
+            Console.WriteLine();
+        }
     }
 }

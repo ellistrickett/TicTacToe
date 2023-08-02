@@ -19,16 +19,14 @@ namespace TicTacToe.Tests
             });
 
             var consoleManagerMock = new Mock<IConsoleManager>();
-            var consoleUI = new ConsoleUI(gameMock.Object, consoleManagerMock.Object);
-
-            var consoleUI = new ConsoleUI(gameMock.Object);
+            var consoleUI = new ConsoleUI(consoleManagerMock.Object, gameMock.Object);
 
             // Act
             consoleUI.DisplayBoard();
 
             // Assert
             consoleManagerMock.Verify(m => m.Write(It.IsAny<string>()), Times.Exactly(9));
-            consoleManagerMock.Verify(m => m.WriteLine(It.IsAny<string>()), Times.Exactly(3));
+            consoleManagerMock.Verify(m => m.WriteLine(), Times.Exactly(3));
         }
     }
 }
