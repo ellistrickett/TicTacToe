@@ -64,7 +64,7 @@ namespace TicTacToe.Tests
 
             // Assert
             _fixture.MockConsoleManager.Verify(m => m.Write(expectedPrompt), Times.Once);
-            _fixture.MockConsoleManager.Verify(m => m.WriteLine("Invalid input! Please enter a number (1-9)."), Times.Once);
+            _fixture.MockConsoleManager.Verify(m => m.Write("Invalid input! Please enter a number (1-9): "), Times.Once);
             _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Exactly(2));
             Assert.Equal(5, move);
         }

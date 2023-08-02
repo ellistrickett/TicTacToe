@@ -44,7 +44,7 @@ namespace TicTacToe
 
                 if (!int.TryParse(input, out move))
                 {
-                    _consoleManager.WriteLine("Invalid input! Please enter a number (1-9).");
+                    _consoleManager.Write("Invalid input! Please enter a number (1-9): ");
                 }
                 else
                 {
@@ -60,6 +60,7 @@ namespace TicTacToe
         public void Run(string[] args)
         {
             DisplayBoard();
+            GetPlayerMove();
         }
     }
 }
