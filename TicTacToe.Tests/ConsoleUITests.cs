@@ -49,5 +49,24 @@ namespace TicTacToe.Tests
             _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Once);
             Assert.Equal(5, move);
         }
+        [Fact]
+        public void ConsoleUI_GetPlayerMove_InputLetterPromptsUserForNumber()
+        {
+            // Arrange
+            string expectedPrompt = "Enter your move (1-9): ";
+            string input = "L";
+            _fixture.MockConsoleManager.SetupSequence(m => m.ReadLine())
+                                      .Returns(input)
+                                      .Returns("5");
+
+            // Act
+            int move = _fixture.ConsoleUI.GetPlayerMove();
+
+            // Assert
+            _fixture.MockConsoleManager.Verify(m => m.Write(expectedPrompt), Times.Once);
+            _fixture.MockConsoleManager.Verify(m => m.WriteLine("Invalid input! Please enter a number."), Times.Once);
+            _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Exactly(2));
+            Assert.Equal(5, move);
+        }
     }
 }
