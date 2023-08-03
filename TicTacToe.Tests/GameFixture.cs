@@ -13,7 +13,7 @@ namespace TicTacToe.Tests
     {
         public Mock<IBoard> MockBoard { get; private set; }
         public Mock<IRandomNumberGenerator> MockRandomNumberGenerator { get; private set; }
-        public Game Game { get; private set; }
+        public IGame Game { get; private set; }
 
         public GameFixture()
         {

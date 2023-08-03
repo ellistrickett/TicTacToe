@@ -13,7 +13,7 @@ namespace TicTacToe.Tests
         public Mock<IConsoleManager> MockConsoleManager { get; private set; }
         public Mock<IGame> MockGame { get; private set; }
         public Mock<IBoard> MockBoard { get; private set; }
-        public ConsoleUI ConsoleUI { get; private set; }
+        public IConsoleUI ConsoleUI { get; private set; }
 
         public ConsoleUIFixture()
         {
