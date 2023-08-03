@@ -57,6 +57,27 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
+        public void Game_IsGameOver_BoardFull_ShouldReturnTrue()
+        {
+            //Arrange
+            char[,] fullBoard = new char[,]
+            {
+                { 'X', 'O', 'X' },
+                { 'O', 'X', 'O' },
+                { 'O', 'X', 'O' }
+            };
+
+            _fixture.MockBoard.Setup(m => m.GetBoard())
+                        .Returns(fullBoard);
+
+            // Act
+            bool isGameOver = _fixture.Game.IsGameOver();
+
+            // Assert
+            Assert.True(isGameOver);
+        }
+
+        [Fact]
         public void Game_MakeComputerMove_ShouldSelectValidUnoccupiedCell()
         {
             //Arrange
