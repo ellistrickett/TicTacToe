@@ -1,3 +1,6 @@
+using Moq;
+using System.Security.Cryptography;
+
 namespace TicTacToe.Tests
 {
     public class GameTests
@@ -73,6 +76,17 @@ namespace TicTacToe.Tests
 
             // Assert
             Assert.False(isGameOver);
+        }
+
+        [Fact]
+        public void Game_MakeComputerMove_ShouldSelectValidUnoccupiedCell()
+        {
+            // Act
+            _game.MakeComputerMove('O');
+
+            // Assert
+            Assert.True(_game.IsValidMove(4));
+            Assert.Equal('O', _game.Board[1, 0]);
         }
 
     }
