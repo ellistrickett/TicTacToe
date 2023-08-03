@@ -5,11 +5,11 @@ namespace TicTacToe.Tests
 {
     public class GameTests
     {
-        private readonly IGame _game;
+        private readonly GameFixture _fixture;
 
         public GameTests()
         {
-            _game = new Game();
+            _fixture = new GameFixture();
         }
 
         [Fact]
@@ -24,7 +24,7 @@ namespace TicTacToe.Tests
                 { '-', '-', '-' }
             };
 
-            Assert.Equal(expectedBoard, _game.GetBoard());
+            Assert.Equal(expectedBoard, _fixture.Game.GetBoard());
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace TicTacToe.Tests
             int validMove = 3;
 
             // Act
-            bool isValid = _game.IsValidMove(validMove);
+            bool isValid = _fixture.Game.IsValidMove(validMove);
 
             // Assert
             Assert.True(isValid);
@@ -46,10 +46,10 @@ namespace TicTacToe.Tests
             // Arrange
             int move = 2;
 
-            _game.Board[0, 1] = 'X';
+            _fixture.Game.Board[0, 1] = 'X';
 
             // Act
-            bool isValid = _game.IsValidMove(move);
+            bool isValid = _fixture.Game.IsValidMove(move);
 
             // Assert
             Assert.False(isValid);
@@ -62,17 +62,17 @@ namespace TicTacToe.Tests
             int validMove = 1;
 
             // Act
-            _game.MakeMove(validMove, 'X');
+            _fixture.Game.MakeMove(validMove, 'X');
 
             // Assert
-            Assert.Equal('X', _game.Board[0, 0]);
+            Assert.Equal('X', _fixture.Game.Board[0, 0]);
         }
 
         [Fact]
         public void Game_IsGameOver_ShouldReturnFalse()
         {
             // Act
-            bool isGameOver = _game.IsGameOver();
+            bool isGameOver = _fixture.Game.IsGameOver();
 
             // Assert
             Assert.False(isGameOver);
@@ -81,12 +81,17 @@ namespace TicTacToe.Tests
         [Fact]
         public void Game_MakeComputerMove_ShouldSelectValidUnoccupiedCell()
         {
+            //Arrange
+            int randomMove = 4;
+            _fixture.MockRandomNumberGenerator.Setup(r => r.Next())
+                        .Returns(randomMove);
+
             // Act
-            _game.MakeComputerMove('O');
+            _fixture.Game.MakeComputerMove('O');
 
             // Assert
-            Assert.True(_game.IsValidMove(4));
-            Assert.Equal('O', _game.Board[1, 0]);
+            Assert.True(_fixture.Game.IsValidMove(randomMove));
+            Assert.Equal('O', _fixture.Game.Board[1, 0]);
         }
 
     }

@@ -1,11 +1,17 @@
-﻿namespace TicTacToe
+﻿using ConsoleManager;
+
+namespace TicTacToe
 {
     public class Game : IGame
     {
+        private readonly IRandomNumberGenerator _randomNumberGenerator;
+
         private char[,] board;
 
-        public Game()
+        public Game(IRandomNumberGenerator randomNumberGenerator)
         {
+            _randomNumberGenerator = randomNumberGenerator;
+
             board = new char[,]
             {
                 { '-', '-', '-' },
