@@ -103,12 +103,11 @@ namespace TicTacToe.Tests
         [Fact]
         public void Game_IsGameOver_ShouldReturnTrueForXWinRow_GameResultX()
         {
-            // Set up the board to represent a player win in the first row
             char[,] board = new char[,]
             {
-            { 'X', 'X', 'X' },
-            { 'O', 'O', '-' },
-            { '-', '-', '-' }
+                { 'X', 'X', 'X' },
+                { 'O', 'O', '-' },
+                { '-', '-', '-' }
             };
 
             // Act
@@ -124,12 +123,31 @@ namespace TicTacToe.Tests
         [Fact]
         public void Game_IsGameOver_ShouldReturnTrueForXWinColumn_GameResultX()
         {
-            // Set up the board to represent a player win in the first row
             char[,] board = new char[,]
             {
-            { 'X', 'O', '-' },
-            { 'X', 'O', '-' },
-            { 'X', '-', '-' }
+                { 'X', 'O', '-' },
+                { 'X', 'O', '-' },
+                { 'X', '-', '-' }
+            };
+
+            // Act
+            _fixture.MockBoard.Setup(m => m.GetBoard())
+                        .Returns(board);
+            bool isGameOver = _fixture.Game.IsGameOver();
+
+            // Assert
+            Assert.True(isGameOver);
+            Assert.Equal("X", _fixture.Game.GameResult);
+        }
+
+        [Fact]
+        public void Game_IsGameOver_ShouldReturnTrueForXWinDiagonal_GameResultX()
+        {
+            char[,] board = new char[,]
+            {
+                { 'X', 'O', '-' },
+                { '-', 'X', '-' },
+                { 'O', '-', 'X' }
             };
 
             // Act
