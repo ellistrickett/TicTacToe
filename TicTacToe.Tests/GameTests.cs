@@ -76,7 +76,7 @@ namespace TicTacToe.Tests
 
             // Assert
             Assert.True(isGameOver);
-            Assert.Equal("Draw", _fixture.Game.GameResult);
+            Assert.Equal("It's a Draw!", _fixture.Game.GameResult);
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace TicTacToe.Tests
 
             // Assert
             Assert.True(isGameOver);
-            Assert.Equal("X", _fixture.Game.GameResult);
+            Assert.Equal("Congratulations Player X, You Win!", _fixture.Game.GameResult);
         }
 
         [Fact]
@@ -137,7 +137,7 @@ namespace TicTacToe.Tests
 
             // Assert
             Assert.True(isGameOver);
-            Assert.Equal("X", _fixture.Game.GameResult);
+            Assert.Equal("Congratulations Player X, You Win!", _fixture.Game.GameResult);
         }
 
         [Fact]
@@ -157,7 +157,7 @@ namespace TicTacToe.Tests
 
             // Assert
             Assert.True(isGameOver);
-            Assert.Equal("X", _fixture.Game.GameResult);
+            Assert.Equal("Congratulations Player X, You Win!", _fixture.Game.GameResult);
         }
 
         [Fact]

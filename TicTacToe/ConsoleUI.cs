@@ -68,12 +68,20 @@ namespace TicTacToe
                 MakePlayerMove();
                 DisplayBoard();
 
+                //Code Smell
+                if (_game.IsGameOver())
+                {
+                    break;
+                }
+
                 Console.WriteLine("Computer is plotting its move...");
                 //Should Interface and Test
                 Thread.Sleep(2000);
 
                 _game.MakeComputerMove('O');
             }
+
+            Console.WriteLine(_game.GameResult);
         }
     }
 }

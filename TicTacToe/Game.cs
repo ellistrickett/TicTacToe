@@ -11,6 +11,7 @@ namespace TicTacToe
             _board = board;
             _randomNumberGenerator = randomNumberGenerator;
         }
+        //Code Smell
         public string GameResult { get; private set; }
 
         public bool IsValidMove(int row, int col)
@@ -40,6 +41,8 @@ namespace TicTacToe
             _board.SetCell(row, col, playerSymbol);
         }
 
+        //Code Smell Maybe Keep Track Of Moves
+        //Saves Iterating Through Board All The Time
         public bool IsGameOver()
         {
             char[,] board = _board.GetBoard();
@@ -51,7 +54,7 @@ namespace TicTacToe
 
             if (IsBoardFull(board))
             {
-                GameResult = "Draw";
+                GameResult = "It's a Draw!";
                 return true;
             }
 
@@ -71,14 +74,14 @@ namespace TicTacToe
                 //Check rows
                 if (board[i, 0] == playerSymbol && board[i, 1] == playerSymbol && board[i, 2] == playerSymbol)
                 {
-                    GameResult = playerSymbol.ToString();
+                    GameResult = $"Congratulations Player {playerSymbol}, You Win!";
                     return true;
                 }
 
                 // Check columns
                 if (board[0, i] == playerSymbol && board[1, i] == playerSymbol && board[2, i] == playerSymbol)
                 {
-                    GameResult = playerSymbol.ToString();
+                    GameResult = $"Congratulations Player {playerSymbol}, You Win!";
                     return true;
                 }
             }
@@ -86,13 +89,13 @@ namespace TicTacToe
             // Check diagonals
             if (board[0, 0] == playerSymbol && board[1, 1] == playerSymbol && board[2, 2] == playerSymbol)
             {
-                GameResult = playerSymbol.ToString();
+                GameResult = $"Congratulations Player {playerSymbol}, You Win!";
                 return true;
             }
 
             if (board[0, 2] == playerSymbol && board[1, 1] == playerSymbol && board[2, 0] == playerSymbol)
             {
-                GameResult = playerSymbol.ToString();
+                GameResult = $"Congratulations Player {playerSymbol}, You Win!";
                 return true;
             }
 
