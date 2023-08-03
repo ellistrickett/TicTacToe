@@ -68,6 +68,12 @@ namespace TicTacToe
                 DisplayBoard();
                 int move = GetPlayerMove();
                 _game.MakeMove(move, 'X');
+                DisplayBoard();
+
+                Console.WriteLine("Computer is plotting its move...");
+                //Should Interface and Test
+                Thread.Sleep(2000);
+
                 _game.MakeComputerMove('O');
             }
         }
