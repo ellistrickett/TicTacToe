@@ -14,7 +14,7 @@ namespace TicTacToe.Tests
         public Mock<IRandomNumberGenerator> MockRandomNumberGenerator { get; private set; }
         public Game Game { get; private set; }
 
-        public Game()
+        public GameFixture()
         {
             MockRandomNumberGenerator = new Mock<IRandomNumberGenerator>();
 

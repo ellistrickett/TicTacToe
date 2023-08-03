@@ -1,4 +1,5 @@
 ﻿using ConsoleManager;
+using System.Security.Cryptography;
 
 namespace TicTacToe
 {
@@ -44,6 +45,18 @@ namespace TicTacToe
             GetRowAndColumn(move, out int row, out int col);
 
             board[row, col] = playerSymbol;
+        }
+
+        public void MakeComputerMove(char playerSymbol)
+        {
+            int move;
+
+            do
+            {
+                move = _randomNumberGenerator.Next();
+            } while (!IsValidMove(move));
+
+            MakeMove(move, playerSymbol);
         }
 
         public bool IsGameOver()

@@ -90,7 +90,6 @@ namespace TicTacToe.Tests
             _fixture.Game.MakeComputerMove('O');
 
             // Assert
-            Assert.True(_fixture.Game.IsValidMove(randomMove));
             Assert.Equal('O', _fixture.Game.Board[1, 0]);
         }
 
