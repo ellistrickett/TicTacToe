@@ -30,10 +30,7 @@ namespace TicTacToe
         }
         public void MakePlayerMove()
         {
-            int move;
             bool isValidMove = false;
-            int row = 10;
-            int col = 10;
 
             _consoleManager.Write("Enter your move (1-9): ");
             
@@ -41,25 +38,26 @@ namespace TicTacToe
             {
                 string input = _consoleManager.ReadLine();
 
-                if (!int.TryParse(input, out move) || move < 1 || move > 9)
+                if (!int.TryParse(input, out int move) || move < 1 || move > 9)
                 {
                     _consoleManager.Write("Invalid input! Please enter a number (1-9): ");
                 }
                 else
                 {
-                    BoardUtility.GetRowAndColumn(move, out row, out col);
+                    BoardUtility.GetRowAndColumn(move, out int row, out int col);
 
                     isValidMove = _game.IsValidMove(row, col);
                     if (!isValidMove)
                     {
                         _consoleManager.Write("Invalid move! Cell already occupied. Please enter another move: ");
                     }
+                    else
+                    {
+                        _board.SetCell(row, col, 'X');
+                    }
                 }
 
-            } while (!isValidMove);
-
-            _board.SetCell(row, col, 'X');
-
+            } while (!isValidMove);          
         }
 
         public void Run(string[] args)
