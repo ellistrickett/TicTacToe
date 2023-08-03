@@ -1,5 +1,6 @@
 using Moq;
 using System.Security.Cryptography;
+using System.Xml.Linq;
 
 namespace TicTacToe.Tests
 {
@@ -97,6 +98,25 @@ namespace TicTacToe.Tests
 
             // Assert
             Assert.False(isGameOver);
+        }
+
+        [Fact]
+        public void Game_IsPlayerWin_ShouldReturnTrueForXWinInRow_GameResultX()
+        {
+            // Set up the board to represent a player win in the first row
+            char[,] board = new char[,]
+            {
+            { 'X', 'X', 'X' },
+            { '-', '-', '-' },
+            { '-', '-', '-' }
+            };
+
+            // Act
+            bool isPlayerWin = _fixture.Game.IsPlayerWin('X', board);
+
+            // Assert
+            Assert.True(isPlayerWin);
+            Assert.Equal("X", _fixture.Game.GameResult);
         }
 
         [Fact]
