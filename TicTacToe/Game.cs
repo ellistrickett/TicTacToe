@@ -6,7 +6,6 @@ namespace TicTacToe
         private readonly IBoard _board;
         private readonly IRandomNumberGenerator _randomNumberGenerator;
 
-
         public Game(IBoard board, IRandomNumberGenerator randomNumberGenerator)
         {
             _board = board;
@@ -44,8 +43,27 @@ namespace TicTacToe
         {
             char[,] board = _board.GetBoard();
 
-            return board.Cast<char>().All(cell => cell != '-');
+            if (IsLessThan5Moves(board))
+            {
+                return false;
+            }
 
+            if (IsFullBoard(board))
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        private bool IsFullBoard(char[,] board)
+        {
+            return board.Cast<char>().All(cell => cell != '-');
+        }
+        private bool IsLessThan5Moves(char[,] board)
+        {
+            return board.Cast<char>().Count(cell => cell != '-') < 5;
         }
     }
 }

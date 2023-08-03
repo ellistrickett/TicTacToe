@@ -78,6 +78,27 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
+        public void Game_IsGameOver_LessThan5Moves_ShouldReturnFalse()
+        {
+            //Arrange
+            char[,] lessThan5MovesBoard = new char[,]
+            {
+                { 'X', '-', '-' },
+                { '-', 'O', 'O' },
+                { '-', '-', 'X' }
+            };
+
+            _fixture.MockBoard.Setup(m => m.GetBoard())
+                        .Returns(lessThan5MovesBoard);
+
+            // Act
+            bool isGameOver = _fixture.Game.IsGameOver();
+
+            // Assert
+            Assert.False(isGameOver);
+        }
+
+        [Fact]
         public void Game_MakeComputerMove_ShouldSelectValidUnoccupiedCell()
         {
             //Arrange
