@@ -1,9 +1,4 @@
 ﻿using ConsoleManager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TicTacToe
 {
@@ -11,16 +6,18 @@ namespace TicTacToe
     {
         private readonly IConsoleManager _consoleManager;
         private readonly IGame _game;
+        private readonly IBoard _board;
 
-        public ConsoleUI(IConsoleManager consoleManager, IGame game)
+        public ConsoleUI(IConsoleManager consoleManager, IGame game, IBoard board)
         {
             _consoleManager = consoleManager;
             _game = game;
+            _board = board;
         }
 
         public void DisplayBoard()
         {
-            char[,] board = _game.GetBoard();
+            char[,] board = _board.GetBoard();
 
             for (int row = 0; row < 3; row++)
             {
@@ -31,10 +28,12 @@ namespace TicTacToe
                 _consoleManager.WriteLine();
             }
         }
-        public int GetPlayerMove()
+        public void MakePlayerMove()
         {
             int move;
             bool isValidMove = false;
+            int row = 10;
+            int col = 10;
 
             _consoleManager.Write("Enter your move (1-9): ");
             
@@ -48,7 +47,9 @@ namespace TicTacToe
                 }
                 else
                 {
-                    isValidMove = _game.IsValidMove(move);
+                    BoardUtility.GetRowAndColumn(move, out row, out col);
+
+                    isValidMove = _game.IsValidMove(row, col);
                     if (!isValidMove)
                     {
                         _consoleManager.Write("Invalid move! Cell already occupied. Please enter another move: ");
@@ -57,7 +58,7 @@ namespace TicTacToe
 
             } while (!isValidMove);
 
-            return move;
+            _board.SetCell(row, col, 'X');
 
         }
 
@@ -66,8 +67,7 @@ namespace TicTacToe
             while (!_game.IsGameOver())
             {
                 DisplayBoard();
-                int move = GetPlayerMove();
-                _game.MakeMove(move, 'X');
+                MakePlayerMove();
                 DisplayBoard();
 
                 Console.WriteLine("Computer is plotting its move...");

@@ -4,41 +4,62 @@ namespace TicTacToe.Tests
 {
     public class BoardTests
     {
+        private readonly IBoard _board;
+
+        public BoardTests()
+        {
+            _board = new Board();
+        }
+
         [Fact]
         public void Board_InitializesWithCorrectValues()
         {
-            // Arrange
-            IBoard board = new Board();
-
             // Act
-            char[,] result = board.GetBoard();
+            char[,] result = _board.GetBoard();
 
             // Assert
-            Assert.Equal('-', result[0, 0]);
-            Assert.Equal('-', result[0, 1]);
-            Assert.Equal('-', result[0, 2]);
-            Assert.Equal('-', result[1, 0]);
-            Assert.Equal('-', result[1, 1]);
-            Assert.Equal('-', result[1, 2]);
-            Assert.Equal('-', result[2, 0]);
-            Assert.Equal('-', result[2, 1]);
-            Assert.Equal('-', result[2, 2]);
+            Assert.Equal(new char[,]
+            {
+                { '-', '-', '-' },
+                { '-', '-', '-' },
+                { '-', '-', '-' }
+            }, result);
         }
 
         [Fact]
         public void Board_SetCell_ShouldUpdateCellWithSymbol()
         {
-            // Arrange
-            IBoard board = new Board();
-
             // Act
-            board.SetCell(0, 0, 'X');
-            board.SetCell(1, 1, 'O');
+            _board.SetCell(0, 0, 'X');
+            _board.SetCell(1, 1, 'O');
 
             // Assert
-            char[,] result = board.GetBoard();
-            Assert.Equal('X', result[0, 0]);
-            Assert.Equal('O', result[1, 1]);
+            char[,] result = _board.GetBoard();
+            Assert.Equal(new char[,]
+            {
+                { 'X', '-', '-' },
+                { '-', 'O', '-' },
+                { '-', '-', '-' }
+            }, result);
+        }
+
+        [Fact]
+        public void Board_GetCell_ShouldReturnCorrectValue()
+        {
+            // Arrange
+            char[,] newBoard = new char[,]
+            {
+                    { 'X', '-', '-' },
+                    { '-', '-', '-' },
+                    { '-', '-', '-' }
+            };
+
+            // Act
+            _board.SetBoard(newBoard);
+            char cell = _board.GetCell(0, 0);
+
+            // Assert
+            Assert.Equal('X', cell);
         }
     }
 }

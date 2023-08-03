@@ -17,7 +17,7 @@ namespace TicTacToe.Tests
         public void ConsoleUI_DisplayBoard_ShouldDisplayCorrectBoard()
         {
             // Arrange
-            _fixture.MockGame.Setup(g => g.GetBoard()).Returns(new char[,]
+            _fixture.MockBoard.Setup(m => m.GetBoard()).Returns(new char[,]
             {
                 { '-', '-', '-' },
                 { '-', '-', '-' },
@@ -33,7 +33,7 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void ConsoleUI_GetPlayerMove_ShouldPromptPlayerAndReturnMove()
+        public void ConsoleUI_MakePlayerMove_ShouldPromptPlayer()
         {
             // Arrange
             string expectedPrompt = "Enter your move (1-9): ";
@@ -42,15 +42,14 @@ namespace TicTacToe.Tests
                                       .Returns(input);
 
             // Act
-            int move = _fixture.ConsoleUI.GetPlayerMove();
+            _fixture.ConsoleUI.MakePlayerMove();
 
             // Assert
             _fixture.MockConsoleManager.Verify(m => m.Write(expectedPrompt), Times.Once);
             _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Once);
-            Assert.Equal(5, move);
         }
         [Fact]
-        public void ConsoleUI_GetPlayerMove_InputLetterPromptsUserForNumber()
+        public void ConsoleUI_MakePlayerMove_InputLetterPromptsUserForNumber()
         {
             // Arrange
             string input = "L";
@@ -59,16 +58,15 @@ namespace TicTacToe.Tests
                                       .Returns("5");
 
             // Act
-            int move = _fixture.ConsoleUI.GetPlayerMove();
+            _fixture.ConsoleUI.MakePlayerMove();
 
             // Assert
             _fixture.MockConsoleManager.Verify(m => m.Write("Invalid input! Please enter a number (1-9): "), Times.Once);
             _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Exactly(2));
-            Assert.Equal(5, move);
         }
 
         [Fact]
-        public void ConsoleUI_GetPlayerMove_InputInavlidNumberPromptsUserForNumber()
+        public void ConsoleUI_MakePlayerMove_InputInavlidNumberPromptsUserForNumber()
         {
             // Arrange
             string input = "11";
@@ -77,17 +75,16 @@ namespace TicTacToe.Tests
                                       .Returns("5");
 
             // Act
-            int move = _fixture.ConsoleUI.GetPlayerMove();
+            _fixture.ConsoleUI.MakePlayerMove();
 
             // Assert
             _fixture.MockConsoleManager.Verify(m => m.Write("Invalid input! Please enter a number (1-9): "), Times.Once);
             _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Exactly(2));
-            Assert.Equal(5, move);
         }
 
 
         [Fact]
-        public void ConsoleUI_GetPlayerMove_InputOccupiedCellPromptsAnotherMove()
+        public void ConsoleUI_MakePlayerMove_InputOccupiedCellPromptsAnotherMove()
         {
             // Arrange
             string input = "7";
@@ -95,17 +92,16 @@ namespace TicTacToe.Tests
                                       .Returns(input)
                                       .Returns("5");
 
-            _fixture.MockGame.SetupSequence(m => m.IsValidMove(It.IsAny<int>()))
+            _fixture.MockGame.SetupSequence(m => m.IsValidMove(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(false)
                 .Returns(true);
 
             // Act
-            int move = _fixture.ConsoleUI.GetPlayerMove();
+            _fixture.ConsoleUI.MakePlayerMove();
 
             // Assert
             _fixture.MockConsoleManager.Verify(m => m.Write("Invalid move! Cell already occupied. Please enter another move: "), Times.Once);
             _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Exactly(2));
-            Assert.Equal(5, move);
         }
     }
 }

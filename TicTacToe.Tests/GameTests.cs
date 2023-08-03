@@ -13,28 +13,17 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void Game_ShouldInitializeBoardCorrectly()
-        {
-
-            // Assert
-            char[,] expectedBoard = new char[,]
-            {
-                { '-', '-', '-' },
-                { '-', '-', '-' },
-                { '-', '-', '-' }
-            };
-
-            Assert.Equal(expectedBoard, _fixture.Game.GetBoard());
-        }
-
-        [Fact]
         public void Game_IsValidMove_ShouldReturnTrueForValidMove()
         {
             // Arrange
-            int validMove = 3;
+            int row = 0;
+            int col = 0;
+
+            _fixture.MockBoard.Setup(m => m.GetCell(row, col))
+                    .Returns('-');
 
             // Act
-            bool isValid = _fixture.Game.IsValidMove(validMove);
+            bool isValid = _fixture.Game.IsValidMove(row, col);
 
             // Assert
             Assert.True(isValid);
@@ -44,28 +33,17 @@ namespace TicTacToe.Tests
         public void Game_IsValidMove_ShouldReturnFalseForOccupiedCell()
         {
             // Arrange
-            int move = 2;
+            int row = 0;
+            int col = 1;
 
-            _fixture.Game.Board[0, 1] = 'X';
+            _fixture.MockBoard.Setup(m => m.GetCell(row, col))
+                    .Returns('O');
 
             // Act
-            bool isValid = _fixture.Game.IsValidMove(move);
+            bool isValid = _fixture.Game.IsValidMove(row, col);
 
             // Assert
             Assert.False(isValid);
-        }
-
-        [Fact]
-        public void Game_MakeMove_ShouldUpdateTheBoard()
-        {
-            // Arrange
-            int validMove = 1;
-
-            // Act
-            _fixture.Game.MakeMove(validMove, 'X');
-
-            // Assert
-            Assert.Equal('X', _fixture.Game.Board[0, 0]);
         }
 
         [Fact]
@@ -86,32 +64,38 @@ namespace TicTacToe.Tests
             _fixture.MockRandomNumberGenerator.Setup(r => r.Next())
                         .Returns(randomMove);
 
+            _fixture.MockBoard.Setup(m => m.GetCell(1, 0))
+                        .Returns('-');
+
             // Act
             _fixture.Game.MakeComputerMove('O');
 
             // Assert
-            Assert.Equal('O', _fixture.Game.Board[1, 0]);
+            _fixture.MockRandomNumberGenerator.Verify(m => m.Next(), Times.Once);
+            _fixture.MockBoard.Verify(m => m.GetCell(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
         public void Game_MakeComputerMove_ShouldKeepGeneratingRandomNumbersUntilValidMove()
         {
-            //Arrange
-            _fixture.Game.Board[1, 0] = 'X'; // 4
-            _fixture.Game.Board[1, 1] = 'X'; // 5
-            _fixture.Game.Board[1, 2] = '0'; // 6
-
             _fixture.MockRandomNumberGenerator.SetupSequence(r => r.Next())
                         .Returns(4)
                         .Returns(5)
                         .Returns(6)
                         .Returns(7);
 
+            _fixture.MockBoard.SetupSequence(m => m.GetCell(It.IsAny<int>(), It.IsAny<int>()))
+                        .Returns('O')
+                        .Returns('X')
+                        .Returns('X')
+                        .Returns('-');
+
             // Act
             _fixture.Game.MakeComputerMove('O');
 
             // Assert
-            Assert.Equal('O', _fixture.Game.Board[2, 0]);
+            _fixture.MockRandomNumberGenerator.Verify(m => m.Next(), Times.Exactly(4));
+            _fixture.MockBoard.Verify(m => m.GetCell(It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(4));
         }
 
     }

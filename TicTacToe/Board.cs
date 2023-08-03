@@ -21,4 +21,14 @@
     {
         _board[row, col] = symbol;
     }
+
+    public char GetCell(int row, int col)
+    {
+        return _board[row, col];
+    }
+    public void SetBoard(char[,] newBoard)
+    {
+        _board = newBoard;
+    }
+
 }

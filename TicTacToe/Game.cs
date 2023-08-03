@@ -1,38 +1,21 @@
-﻿using ConsoleManager;
-using System.Security.Cryptography;
-
+﻿
 namespace TicTacToe
 {
     public class Game : IGame
     {
+        private readonly IBoard _board;
         private readonly IRandomNumberGenerator _randomNumberGenerator;
 
-        private char[,] board;
 
-        public Game(IRandomNumberGenerator randomNumberGenerator)
+        public Game(IBoard board, IRandomNumberGenerator randomNumberGenerator)
         {
+            _board = board;
             _randomNumberGenerator = randomNumberGenerator;
-
-            board = new char[,]
-            {
-                { '-', '-', '-' },
-                { '-', '-', '-' },
-                { '-', '-', '-' }
-            };
         }
 
-        public char[,] Board => board;
-
-        public char[,] GetBoard()
+        public bool IsValidMove(int row, int col)
         {
-            return board;
-        }
-
-        public bool IsValidMove(int move)
-        {
-            GetRowAndColumn(move, out int row, out int col);
-
-            if (board[row, col] != '-')
+            if (_board.GetCell(row, col) != '-')
             {
                 return false;
             }
@@ -40,34 +23,26 @@ namespace TicTacToe
             return true;
         }
 
-        public void MakeMove(int move, char playerSymbol)
-        {
-            GetRowAndColumn(move, out int row, out int col);
-
-            board[row, col] = playerSymbol;
-        }
-
         public void MakeComputerMove(char playerSymbol)
         {
             int move;
+            int row;
+            int col;
 
             do
             {
                 move = _randomNumberGenerator.Next();
-            } while (!IsValidMove(move));
 
-            MakeMove(move, playerSymbol);
+                BoardUtility.GetRowAndColumn(move, out row, out col);
+
+            } while (!IsValidMove(row, col));
+
+            _board.SetCell(row, col, playerSymbol);
         }
 
         public bool IsGameOver()
         {
             return false;
-        }
-
-        private void GetRowAndColumn(int move, out int row, out int col)
-        {
-            row = (move - 1) / 3;
-            col = (move - 1) % 3;
         }
     }
 }

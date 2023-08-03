@@ -6,6 +6,7 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<IConsoleManager, ConsoleManager.ConsoleManager>()
     .AddSingleton<IConsoleUI, ConsoleUI>()
     .AddSingleton<IGame, Game>()
+    .AddSingleton<IBoard, Board>()
     .AddSingleton<IRandomNumberGenerator, RandomNumberGenerator>()
     .BuildServiceProvider();
 
