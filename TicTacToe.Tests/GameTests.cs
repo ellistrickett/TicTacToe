@@ -57,7 +57,7 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void Game_IsGameOver_BoardFull_ShouldReturnTrue()
+        public void Game_IsGameOver_BoardFull_ShouldReturnTrue_GameResultDraw()
         {
             //Arrange
             char[,] fullBoard = new char[,]
@@ -75,6 +75,7 @@ namespace TicTacToe.Tests
 
             // Assert
             Assert.True(isGameOver);
+            Assert.Equal("Draw", _fixture.Game.GameResult);
         }
 
         [Fact]

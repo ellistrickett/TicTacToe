@@ -11,6 +11,7 @@ namespace TicTacToe
             _board = board;
             _randomNumberGenerator = randomNumberGenerator;
         }
+        public string GameResult { get; private set; }
 
         public bool IsValidMove(int row, int col)
         {
@@ -48,8 +49,9 @@ namespace TicTacToe
                 return false;
             }
 
-            if (IsFullBoard(board))
+            if (IsBoardFull(board))
             {
+                GameResult = "Draw";
                 return true;
             }
 
@@ -57,7 +59,7 @@ namespace TicTacToe
 
         }
 
-        private bool IsFullBoard(char[,] board)
+        private bool IsBoardFull(char[,] board)
         {
             return board.Cast<char>().All(cell => cell != '-');
         }
