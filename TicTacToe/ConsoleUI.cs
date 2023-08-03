@@ -68,6 +68,7 @@ namespace TicTacToe
                 DisplayBoard();
                 int move = GetPlayerMove();
                 _game.MakeMove(move, 'X');
+                _game.MakeComputerMove('O');
             }
         }
     }

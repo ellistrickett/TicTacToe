@@ -7,5 +7,6 @@
         bool IsValidMove(int move);
         void MakeMove(int move, char playerSymbol);
         bool IsGameOver();
+        void MakeComputerMove(char playerSymbol);
     }
 }
