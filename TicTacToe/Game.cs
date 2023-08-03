@@ -1,4 +1,6 @@
 ﻿
+using System.Xml.Linq;
+
 namespace TicTacToe
 {
     public class Game : IGame
@@ -24,6 +26,23 @@ namespace TicTacToe
             return true;
         }
 
+        //Need to Test
+        public string? MakeHumanMove(int move)
+        {
+            GetRowAndColumn(move, out int row, out int col);
+
+            if (!IsValidMove(row, col))
+            {
+                return "Invalid move! Cell already occupied. Please enter another move: ";
+            }
+            else
+            {
+                _board.SetCell(row, col, 'X');
+            }
+
+            return null;
+        }
+
         public void MakeComputerMove(char playerSymbol)
         {
             int move;
@@ -34,7 +53,7 @@ namespace TicTacToe
             {
                 move = _randomNumberGenerator.Next();
 
-                BoardUtility.GetRowAndColumn(move, out row, out col);
+                GetRowAndColumn(move, out row, out col);
 
             } while (!IsValidMove(row, col));
 
@@ -103,13 +122,18 @@ namespace TicTacToe
             return false;
         }
 
-        private bool IsBoardFull(char[,] board)
+        private static bool IsBoardFull(char[,] board)
         {
             return board.Cast<char>().All(cell => cell != '-');
         }
-        private bool IsLessThan5Moves(char[,] board)
+        private static bool IsLessThan5Moves(char[,] board)
         {
             return board.Cast<char>().Count(cell => cell != '-') < 5;
+        }
+        private static void GetRowAndColumn(int move, out int row, out int col)
+        {
+            row = (move - 1) / 3;
+            col = (move - 1) % 3;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace TicTacToe
     {
         void DisplayBoard();
         void Run(string[] args);
-        void MakePlayerMove();
+        void PromptHumanMove();
 
     }
 }

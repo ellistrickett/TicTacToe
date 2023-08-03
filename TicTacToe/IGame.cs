@@ -6,5 +6,6 @@
         bool IsValidMove(int row, int col);
         bool IsGameOver();
         void MakeComputerMove(char playerSymbol);
+        string? MakeHumanMove(int move);
     }
 }
