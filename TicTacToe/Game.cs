@@ -68,6 +68,7 @@ namespace TicTacToe
         {
             for (int i = 0; i < 3; i++)
             {
+                //Check rows
                 if (board[i, 0] == playerSymbol && board[i, 1] == playerSymbol && board[i, 2] == playerSymbol)
                 {
                     GameResult = playerSymbol.ToString();
@@ -81,6 +82,20 @@ namespace TicTacToe
                     return true;
                 }
             }
+
+            // Check diagonals
+            if (board[0, 0] == playerSymbol && board[1, 1] == playerSymbol && board[2, 2] == playerSymbol)
+            {
+                GameResult = playerSymbol.ToString();
+                return true;
+            }
+
+            if (board[0, 2] == playerSymbol && board[1, 1] == playerSymbol && board[2, 0] == playerSymbol)
+            {
+                GameResult = playerSymbol.ToString();
+                return true;
+            }
+
 
             return false;
         }
