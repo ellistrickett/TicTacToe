@@ -55,8 +55,34 @@ namespace TicTacToe
                 return true;
             }
 
+            if (IsPlayerWin('X', board) || IsPlayerWin('O', board))
+            {
+                return true;
+            }
+
             return false;
 
+        }
+
+        private bool IsPlayerWin(char playerSymbol, char[,] board)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (board[i, 0] == playerSymbol && board[i, 1] == playerSymbol && board[i, 2] == playerSymbol)
+                {
+                    GameResult = playerSymbol.ToString();
+                    return true;
+                }
+
+                // Check columns
+                if (board[0, i] == playerSymbol && board[1, i] == playerSymbol && board[2, i] == playerSymbol)
+                {
+                    GameResult = playerSymbol.ToString();
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private bool IsBoardFull(char[,] board)
