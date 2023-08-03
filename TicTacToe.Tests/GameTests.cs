@@ -93,5 +93,26 @@ namespace TicTacToe.Tests
             Assert.Equal('O', _fixture.Game.Board[1, 0]);
         }
 
+        [Fact]
+        public void Game_MakeComputerMove_ShouldKeepGeneratingRandomNumbersUntilValidMove()
+        {
+            //Arrange
+            _fixture.Game.Board[1, 0] = 'X'; // 4
+            _fixture.Game.Board[1, 1] = 'X'; // 5
+            _fixture.Game.Board[1, 2] = '0'; // 6
+
+            _fixture.MockRandomNumberGenerator.SetupSequence(r => r.Next())
+                        .Returns(4)
+                        .Returns(5)
+                        .Returns(6)
+                        .Returns(7);
+
+            // Act
+            _fixture.Game.MakeComputerMove('O');
+
+            // Assert
+            Assert.Equal('O', _fixture.Game.Board[2, 0]);
+        }
+
     }
 }
