@@ -16,31 +16,17 @@ namespace TicTacToe
         //Code Smell
         public string GameResult { get; private set; }
 
-        public bool IsValidMove(int row, int col)
+        public bool IsValidMove(int move, out int row, out int col)
         {
+            row = (move - 1) / 3;
+            col = (move - 1) % 3;
+
             if (_board.GetCell(row, col) != '-')
             {
                 return false;
             }
 
             return true;
-        }
-
-        //Need to Test
-        public string? MakeHumanMove(int move)
-        {
-            GetRowAndColumn(move, out int row, out int col);
-
-            if (!IsValidMove(row, col))
-            {
-                return "Invalid move! Cell already occupied. Please enter another move: ";
-            }
-            else
-            {
-                _board.SetCell(row, col, 'X');
-            }
-
-            return null;
         }
 
         public void MakeComputerMove(char playerSymbol)
@@ -53,9 +39,7 @@ namespace TicTacToe
             {
                 move = _randomNumberGenerator.Next();
 
-                GetRowAndColumn(move, out row, out col);
-
-            } while (!IsValidMove(row, col));
+            } while (!IsValidMove(move, out row, out col));
 
             _board.SetCell(row, col, playerSymbol);
         }
@@ -66,12 +50,14 @@ namespace TicTacToe
         {
             char[,] board = _board.GetBoard();
 
-            if (IsLessThan5Moves(board))
+            // Less than 5 moves return False
+            if (board.Cast<char>().Count(cell => cell != '-') < 5)
             {
                 return false;
             }
 
-            if (IsBoardFull(board))
+            // Board Full Draw return true
+            if (board.Cast<char>().All(cell => cell != '-'))
             {
                 GameResult = "It's a Draw!";
                 return true;
@@ -120,20 +106,6 @@ namespace TicTacToe
 
 
             return false;
-        }
-
-        private static bool IsBoardFull(char[,] board)
-        {
-            return board.Cast<char>().All(cell => cell != '-');
-        }
-        private static bool IsLessThan5Moves(char[,] board)
-        {
-            return board.Cast<char>().Count(cell => cell != '-') < 5;
-        }
-        private static void GetRowAndColumn(int move, out int row, out int col)
-        {
-            row = (move - 1) / 3;
-            col = (move - 1) % 3;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void ConsoleUI_MakePlayerMove_ShouldPromptPlayer()
+        public void ConsoleUI_GetHumanMove_ShouldPromptPlayer()
         {
             // Arrange
             string expectedPrompt = "Enter your move (1-9): ";
@@ -42,14 +42,14 @@ namespace TicTacToe.Tests
                                       .Returns(input);
 
             // Act
-            _fixture.ConsoleUI.PromptHumanMove();
+            _fixture.ConsoleUI.GetHumanMove();
 
             // Assert
             _fixture.MockConsoleManager.Verify(m => m.Write(expectedPrompt), Times.Once);
             _fixture.MockConsoleManager.Verify(m => m.ReadLine(), Times.Once);
         }
         [Fact]
-        public void ConsoleUI_MakePlayerMove_InputLetterPromptsUserForNumber()
+        public void ConsoleUI_GetHumanMove_InputLetterPromptsUserForNumber()
         {
             // Arrange
             string input = "L";
@@ -58,7 +58,7 @@ namespace TicTacToe.Tests
                                       .Returns("5");
 
             // Act
-            _fixture.ConsoleUI.PromptHumanMove();
+            _fixture.ConsoleUI.GetHumanMove();
 
             // Assert
             _fixture.MockConsoleManager.Verify(m => m.Write("Invalid input! Please enter a number (1-9): "), Times.Once);
@@ -66,7 +66,7 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void ConsoleUI_MakePlayerMove_InputInavlidNumberPromptsUserForNumber()
+        public void ConsoleUI_GetHumanMove_InputInavlidNumberPromptsUserForNumber()
         {
             // Arrange
             string input = "11";
@@ -75,7 +75,7 @@ namespace TicTacToe.Tests
                                       .Returns("5");
 
             // Act
-            _fixture.ConsoleUI.PromptHumanMove();
+            _fixture.ConsoleUI.GetHumanMove();
 
             // Assert
             _fixture.MockConsoleManager.Verify(m => m.Write("Invalid input! Please enter a number (1-9): "), Times.Once);
@@ -84,7 +84,7 @@ namespace TicTacToe.Tests
 
 
         [Fact]
-        public void ConsoleUI_MakePlayerMove_InputOccupiedCellPromptsAnotherMove()
+        public void ConsoleUI_GetHumanMove_InputOccupiedCellPromptsAnotherMove()
         {
             // Arrange
             string input = "7";
@@ -92,12 +92,12 @@ namespace TicTacToe.Tests
                                       .Returns(input)
                                       .Returns("5");
 
-            _fixture.MockGame.SetupSequence(m => m.MakeHumanMove(It.IsAny<int>()))
-                .Returns("Invalid move! Cell already occupied. Please enter another move: ")
-                .Returns((string?)null);
+            _fixture.MockGame.SetupSequence(m => m.IsValidMove(It.IsAny<int>(), out It.Ref<int>.IsAny, out It.Ref<int>.IsAny))
+                             .Returns(false)
+                             .Returns(true);
 
             // Act
-            _fixture.ConsoleUI.PromptHumanMove();
+            _fixture.ConsoleUI.GetHumanMove();
 
             // Assert
             _fixture.MockConsoleManager.Verify(m => m.Write("Invalid move! Cell already occupied. Please enter another move: "), Times.Once);

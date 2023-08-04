@@ -21,7 +21,10 @@ namespace TicTacToe.Tests
             MockGame = new Mock<IGame>();
             MockBoard = new Mock<IBoard>();
 
-            MockGame.Setup(m => m.IsValidMove(It.IsAny<int>(), It.IsAny<int>()))
+            int expectedRow = 0;
+            int expectedCol = 0;
+
+            MockGame.Setup(m => m.IsValidMove(It.IsAny<int>(), out expectedRow, out expectedCol))
                        .Returns(true);
 
             MockBoard.Setup(b => b.GetBoard()).Returns(new char[,]

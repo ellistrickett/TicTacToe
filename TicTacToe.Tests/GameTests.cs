@@ -14,37 +14,43 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void Game_IsValidMove_ShouldReturnTrueForValidMove()
+        public void Game_IsValidMove_ShouldReturnTrueRowColForValidMove()
         {
             // Arrange
-            int row = 0;
-            int col = 0;
+            int expectedRow = 0;
+            int expectedCol = 0;
+            int move = 1;
 
-            _fixture.MockBoard.Setup(m => m.GetCell(row, col))
+            _fixture.MockBoard.Setup(m => m.GetCell(expectedRow, expectedCol))
                     .Returns('-');
 
             // Act
-            bool isValid = _fixture.Game.IsValidMove(row, col);
+            bool isValid = _fixture.Game.IsValidMove(move, out int row, out int col);
 
             // Assert
             Assert.True(isValid);
+            Assert.Equal(expectedRow, row);
+            Assert.Equal(expectedCol, col);
         }
 
         [Fact]
-        public void Game_IsValidMove_ShouldReturnFalseForOccupiedCell()
+        public void Game_IsValidMove_ShouldReturnFalseRowColForOccupiedCell()
         {
             // Arrange
-            int row = 0;
-            int col = 1;
+            int expectedRow = 0;
+            int expectedCol = 1;
+            int move = 2;
 
-            _fixture.MockBoard.Setup(m => m.GetCell(row, col))
+            _fixture.MockBoard.Setup(m => m.GetCell(expectedRow, expectedCol))
                     .Returns('O');
 
             // Act
-            bool isValid = _fixture.Game.IsValidMove(row, col);
+            bool isValid = _fixture.Game.IsValidMove(move, out int row, out int col);
 
             // Assert
             Assert.False(isValid);
+            Assert.Equal(expectedRow, row);
+            Assert.Equal(expectedCol, col);
         }
 
         [Fact]

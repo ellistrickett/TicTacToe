@@ -28,7 +28,7 @@ namespace TicTacToe
                 _consoleManager.WriteLine();
             }
         }
-        public void PromptHumanMove()
+        public (int, int) GetHumanMove()
         {
             bool isValidMove = false;
 
@@ -44,19 +44,19 @@ namespace TicTacToe
                 }
                 else
                 {
-                    string? invalidMovePrompt = _game.MakeHumanMove(move);
-
-                    if (invalidMovePrompt != null)
+                    if (!_game.IsValidMove(move, out int row, out int col))
                     {
-                        _consoleManager.Write(invalidMovePrompt);
+                        _consoleManager.Write("Invalid move! Cell already occupied. Please enter another move: ");
                     }
                     else
                     {
-                        isValidMove = true;
+                        return (row, col);
                     }
                 }
 
-            } while (!isValidMove);          
+            } while (!isValidMove);
+
+            return (-1, -1);
         }
 
         public void Run(string[] args)
@@ -64,7 +64,10 @@ namespace TicTacToe
             while (!_game.IsGameOver())
             {
                 DisplayBoard();
-                PromptHumanMove();
+
+                var rowCol = GetHumanMove();
+                _board.SetCell(rowCol.Item1, rowCol.Item2, 'X');
+
                 DisplayBoard();
 
                 //Code Smell
