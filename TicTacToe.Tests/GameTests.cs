@@ -14,7 +14,7 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void Game_IsValidMove_ShouldReturnTrueRowColForValidMove()
+        public void Game_TryGetRowCol_ShouldReturnTrueRowColForValidMove()
         {
             // Arrange
             int expectedRow = 0;
@@ -25,7 +25,7 @@ namespace TicTacToe.Tests
                     .Returns('-');
 
             // Act
-            bool isValid = _fixture.Game.IsValidMove(move, out int row, out int col);
+            bool isValid = _fixture.Game.TryGetRowCol(move, out int row, out int col);
 
             // Assert
             Assert.True(isValid);
@@ -34,7 +34,7 @@ namespace TicTacToe.Tests
         }
 
         [Fact]
-        public void Game_IsValidMove_ShouldReturnFalseRowColForOccupiedCell()
+        public void Game_TryGetRowCol_ShouldReturnFalseRowColForOccupiedCell()
         {
             // Arrange
             int expectedRow = 0;
@@ -45,7 +45,7 @@ namespace TicTacToe.Tests
                     .Returns('O');
 
             // Act
-            bool isValid = _fixture.Game.IsValidMove(move, out int row, out int col);
+            bool isValid = _fixture.Game.TryGetRowCol(move, out int row, out int col);
 
             // Assert
             Assert.False(isValid);

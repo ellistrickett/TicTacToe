@@ -13,10 +13,9 @@ namespace TicTacToe
             _board = board;
             _randomNumberGenerator = randomNumberGenerator;
         }
-        //Code Smell
         public string GameResult { get; private set; }
 
-        public bool IsValidMove(int move, out int row, out int col)
+        public bool TryGetRowCol(int move, out int row, out int col)
         {
             row = (move - 1) / 3;
             col = (move - 1) % 3;
@@ -39,12 +38,12 @@ namespace TicTacToe
             {
                 move = _randomNumberGenerator.Next();
 
-            } while (!IsValidMove(move, out row, out col));
+            } while (!TryGetRowCol(move, out row, out col));
 
             _board.SetCell(row, col, playerSymbol);
         }
 
-        //Code Smell Maybe Keep Track Of Moves
+        //Keep Track Of Moves
         //Saves Iterating Through Board All The Time
         public bool IsGameOver()
         {

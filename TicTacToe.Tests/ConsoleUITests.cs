@@ -84,7 +84,7 @@ namespace TicTacToe.Tests
 
 
         [Fact]
-        public void ConsoleUI_GetHumanMove_InputOccupiedCellPromptsAnotherMove()
+        public void ConsoleUI_TryGetRowCol_InputOccupiedCellPromptsAnotherMove()
         {
             // Arrange
             string input = "7";
@@ -92,7 +92,7 @@ namespace TicTacToe.Tests
                                       .Returns(input)
                                       .Returns("5");
 
-            _fixture.MockGame.SetupSequence(m => m.IsValidMove(It.IsAny<int>(), out It.Ref<int>.IsAny, out It.Ref<int>.IsAny))
+            _fixture.MockGame.SetupSequence(m => m.TryGetRowCol(It.IsAny<int>(), out It.Ref<int>.IsAny, out It.Ref<int>.IsAny))
                              .Returns(false)
                              .Returns(true);
 

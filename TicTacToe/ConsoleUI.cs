@@ -30,7 +30,7 @@ namespace TicTacToe
         }
         public (int, int) GetHumanMove()
         {
-            bool isValidMove = false;
+            bool TryGetRowCol = false;
 
             _consoleManager.Write("Enter your move (1-9): ");
             
@@ -44,7 +44,7 @@ namespace TicTacToe
                 }
                 else
                 {
-                    if (!_game.IsValidMove(move, out int row, out int col))
+                    if (!_game.TryGetRowCol(move, out int row, out int col))
                     {
                         _consoleManager.Write("Invalid move! Cell already occupied. Please enter another move: ");
                     }
@@ -54,7 +54,7 @@ namespace TicTacToe
                     }
                 }
 
-            } while (!isValidMove);
+            } while (!TryGetRowCol);
 
             return (-1, -1);
         }
@@ -70,14 +70,12 @@ namespace TicTacToe
 
                 DisplayBoard();
 
-                //Code Smell
                 if (_game.IsGameOver())
                 {
                     break;
                 }
 
                 Console.WriteLine("Computer is plotting its move...");
-                //Should Interface and Test
                 Thread.Sleep(2000);
 
                 _game.MakeComputerMove('O');
